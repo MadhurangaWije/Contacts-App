@@ -69,6 +69,20 @@ npm run dev
 ```
 The application will be available at `http://localhost:3000`
 
+### App Images
+#### Landing Page
+<img width="1710" alt="app-ss-1" src="https://github.com/user-attachments/assets/671e53ae-ccb1-4e42-91c0-c948405d7f96" />
+
+#### Create a new contact
+<img width="1710" alt="app-ss-3" src="https://github.com/user-attachments/assets/ac997682-8eee-42d3-b8d9-c330aeb6bd05" />
+
+#### Edit a contact
+<img width="1710" alt="app-ss-2" src="https://github.com/user-attachments/assets/ae06f27f-614c-4143-892f-95b5899e5935" />
+
+#### Search and filter a contact
+<img width="1710" alt="app-ss-4" src="https://github.com/user-attachments/assets/72531cbc-0576-414c-94b2-2c5e04dcec90" />
+
+
 ### API Configuration
 
 The application expects a REST API running at `http://localhost:3000` with the following endpoints:
