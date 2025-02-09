@@ -56,7 +56,7 @@ The application uses Redux Toolkit for state management with the following struc
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone [[repository-url]](https://github.com/MadhurangaWije/Contacts-App.git)
 cd contacts-app
 ```
 2. Install dependencies:
