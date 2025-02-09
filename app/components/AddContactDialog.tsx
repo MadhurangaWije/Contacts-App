@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { Contact } from "@/app/types"
+import { toast } from 'react-hot-toast'
 
 const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -86,11 +87,16 @@ export default function AddContactDialog({ isOpen, onClose, onAdd }: AddContactD
     setNewContact((prev) => ({ ...prev, [name]: value }))
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (isFormValid) {
-      onAdd(newContact)
-      setNewContact({ name: "", email: "", mobileNumber: "", homeNumber: "", address: "" })
+      try {
+        await onAdd(newContact)
+        setNewContact({ name: "", email: "", mobileNumber: "", homeNumber: "", address: "" })
+        onClose()
+      } catch (error) {
+        toast.error('Failed to add contact. Please try again.')
+      }
     }
   }
 

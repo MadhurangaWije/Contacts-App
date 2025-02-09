@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { contactsApi } from '@/app/services/api'
 import type { Contact, ContactsState } from '@/app/types'
+import { toast } from 'react-hot-toast'
 
 const initialState: ContactsState = {
   items: [],
@@ -48,7 +49,7 @@ export const deleteContact = createAsyncThunk(
   }
 )
 
-const contactsSlice = createSlice({
+export const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
@@ -72,18 +73,37 @@ const contactsSlice = createSlice({
         console.log('Fetch rejected:', action.error)
         state.status = 'failed'
         state.error = action.error.message || 'Failed to fetch contacts'
+        toast.error(`Error loading contacts: ${state.error}`)
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload)
+        toast.success('Contact added successfully')
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message || 'Failed to add contact'
+        toast.error(`Error adding contact: ${state.error}`)
       })
       .addCase(updateContact.fulfilled, (state, action) => {
         const index = state.items.findIndex((contact) => contact.id === action.payload.id)
         if (index !== -1) {
           state.items[index] = action.payload
+          toast.success('Contact updated successfully')
         }
+      })
+      .addCase(updateContact.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message || 'Failed to update contact'
+        toast.error(`Error updating contact: ${state.error}`)
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter((contact) => contact.id !== action.payload)
+        toast.success('Contact deleted successfully')
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message || 'Failed to delete contact'
+        toast.error(`Error deleting contact: ${state.error}`)
       })
   },
 })

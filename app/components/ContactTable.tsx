@@ -8,7 +8,8 @@ import { ChevronDown, ChevronUp, Edit, Trash2 } from "lucide-react"
 import ExpandedCard from "./ExpandedCard"
 import React from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { fetchContacts } from "../store/features/contacts/contactsSlice"
+import { fetchContacts, deleteContact } from "../store/features/contacts/contactsSlice"
+import { toast } from 'react-hot-toast'
 
 interface ContactTableProps {
   contacts: Contact[]
@@ -49,6 +50,16 @@ export default function ContactTable({
     } else {
       setSortColumn(column)
       setSortDirection("asc")
+    }
+  }
+
+  const dispatch = useAppDispatch()
+
+  const handleDelete = async (id: number) => {
+    try {
+      await dispatch(deleteContact(id)).unwrap()
+    } catch (error) {
+      toast.error('Failed to delete contact. Please try again.')
     }
   }
 
@@ -107,7 +118,7 @@ export default function ContactTable({
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation()
-                      onDelete(contact.id)
+                      handleDelete(contact.id)
                     }}
                   >
                     <Trash2 className="h-4 w-4" />

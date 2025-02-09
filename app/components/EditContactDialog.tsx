@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { Contact } from "@/app/types"
+import { toast } from 'react-hot-toast'
 
 interface EditContactDialogProps {
   contact: Contact | null
@@ -26,11 +27,15 @@ export default function EditContactDialog({ contact, isOpen, onClose, onEdit }: 
     setEditedContact((prev) => prev ? ({ ...prev, [name]: value }) : null)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (editedContact) {
-      onEdit(editedContact)
-      onClose()
+      try {
+        await onEdit(editedContact)
+        onClose()
+      } catch (error) {
+        toast.error('Failed to update contact. Please try again.')
+      }
     }
   }
 
