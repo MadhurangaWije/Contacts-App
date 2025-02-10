@@ -63,11 +63,11 @@ cd contacts-app
 ```bash
 npm install
 ```
-3. Start the development server:
+3. Start the development server: (Please make sure the Contacts-API is up and running before running the Contacts-App)
 ```bash
 npm run dev
 ```
-The application will be available at `http://localhost:3000`
+The application will be available at `http://localhost:3001`
 
 ### App Images
 #### Landing Page
